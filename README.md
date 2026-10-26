@@ -70,4 +70,4 @@ The main objective of WaveWrap is to combine gesture recognition, interactive ga
 
 WaveWrap transforms simple hand movements into an exciting journey through time and space. With three unique worlds, crystal challenges, combo scoring, and gesture-based interaction, every adventure offers a new opportunity to explore, compete, and win.
 
-**One Gesture. Three Worlds. Endless Adventure.**
+***One Gesture. Three Worlds. Endless Adventure.***
