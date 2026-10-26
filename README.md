@@ -1,112 +1,73 @@
-# 🌀 WaveWrap
+# WaveWrap – Time-Travel Portal
 
-A webcam hand-gesture game. **Draw a circle in the air** to open a time portal, pick an era with your fingertip, then **catch glowing crystals with your bare hands** before time runs out.
+**Enter the Portal. Explore Three Worlds. Rule the Universe.**
 
-Draw a circle. Wrap time.
+## About the Project
 
-Built with plain HTML/CSS/JavaScript and [MediaPipe](https://developers.google.com/mediapipe). No backend, no build step, no image assets.
+WaveWrap is an interactive time-travel game that allows players to explore different worlds using hand gestures. Built with HTML, CSS, JavaScript, and MediaPipe, the game uses webcam-based hand tracking to create an immersive and engaging gaming experience.
 
-## How to play
+Players can open magical portals, travel between different eras, collect crystals, earn points, and compete for the highest score on the leaderboard.
 
-1. ☝️ Point with one finger and **draw a circle** in the air. A portal opens.
-2. 🚪 Hold your fingertip on a **door** (Dinosaur Age, Deep Space, Future City).
-3. 💎 You are cut out of the camera feed and placed inside that world. Touch crystals with your hands for 30 seconds.
-   - Normal crystal: **+10**
-   - Golden crystal: **+30 and +2 seconds**
-   - Dark spiky orb: **-15 and your combo resets**
-   - Chain pickups for a **combo multiplier** (up to x3)
-4. 💾 Enter your name for the **Top Wave Wrappers** leaderboard, and take a 📸 photo.
+## Features
 
-## Run it
+- **Gesture-Based Controls:** Use hand movements to interact with the game.
+- **Three Unique Worlds:** Explore the Dinosaur Age, Deep Space, and Future City.
+- **Crystal Collection:** Collect golden crystals to earn points and bonus time.
+- **Obstacle Challenge:** Avoid dark spiky orbs that reduce your score.
+- **Combo Scoring:** Build combos to increase your score multiplier.
+- **Leaderboard:** Compete for the highest score.
+- **Photo Capture:** Save memorable moments from your adventure.
+- **Mouse Mode:** Play without a webcam using the mouse controls.
 
-Camera access only works on `localhost` or `https`, so you can't just double-click `index.html`.
+## Technologies Used
 
-```bash
-# from the project folder
-python3 -m http.server 8000
-# then open http://localhost:8000 in Chrome
-```
+- HTML – Structure of the game
+- CSS – Styling and visual design
+- JavaScript – Game logic and interactions
+- MediaPipe – Hand tracking and gesture recognition
+- Webcam – Real-time gesture input
 
-(Any static server works: `npx serve`, VS Code Live Server, etc.)
+## How to Play
 
-An internet connection is needed the first time, because MediaPipe loads from a CDN.
+1. Start the game and allow webcam access.
+2. Draw a circle in the air with your hand to open the portal.
+3. Choose one of the three available worlds.
+4. Collect golden crystals to increase your score and gain bonus time.
+5. Avoid dark spiky orbs to protect your score.
+6. Build combos and aim for the highest leaderboard position.
 
-### Host it free on GitHub Pages
+## Mouse Controls
 
-1. Push this repo to GitHub.
-2. **Settings → Pages → Deploy from a branch → `main` / `(root)` → Save.**
-3. Open `https://<your-username>.github.io/<repo-name>/` (https, so the camera works).
+If you do not want to use a webcam, open the game with `?mouse=1`.
 
-### No camera? Mouse mode
+- **Space:** Open the portal
+- **1 / 2 / 3:** Select a world
+- **P:** Save a photo
 
-Open `http://localhost:8000/?mouse=1`. Hold the mouse button and draw a circle; the pointer replaces your fingertip. Handy for developing and debugging.
+## How to Run
 
-## Keyboard shortcuts (for the expo operator)
+1. Download or clone the project.
+2. Open the project folder.
+3. Launch the game using a local development server or a compatible browser setup.
+4. Allow webcam access when prompted.
+5. Start your time-travel adventure!
 
-| Key | Action |
-| --- | --- |
-| `Space` | Open the portal without drawing a circle |
-| `1` `2` `3` | Pick an era without using the doors |
-| `P` | Save a photo (PNG) |
-| `F` | Fullscreen |
-| `Esc` | Back to the start screen |
-| `Shift + R` | Clear the leaderboard |
+**Note:** Webcam access generally requires HTTPS or localhost. Use a local development server if the game does not work when opening the HTML file directly.
 
-## Project structure
+## Project Objective
 
-```
-wavewrap/
-├── index.html          page + overlays
-├── css/style.css       layout and styling
-└── js/
-    ├── main.js         webcam, MediaPipe, render loop, UI wiring
-    ├── game.js         game states, crystals, scoring, HUD drawing
-    ├── gestures.js     smoothing, pointing pose, circle detector
-    ├── worlds.js       the 3 procedurally drawn worlds
-    ├── audio.js        synthesized sound effects
-    ├── leaderboard.js  top-10 scores in localStorage
-    └── config.js       all tunable numbers + the list of eras
-```
+The main objective of WaveWrap is to combine gesture recognition, interactive gaming, and creative visual environments to deliver a unique experience that makes gameplay more immersive and engaging.
 
-## Tweaking
+## Future Enhancements
 
-Everything lives in `js/config.js`:
+- Add more worlds and levels.
+- Introduce new challenges and power-ups.
+- Add multiplayer gameplay.
+- Improve gesture recognition and accessibility.
+- Include global leaderboard support.
 
-- Round length, spawn speed, crystal size, chance of gold / hazard
-- `circle.*`: how strict the circle gesture is (loosen `maxRadiusVar` and `closeRatio` if it is hard to trigger)
-- `smoothing`: lower = steadier fingertip, higher = more responsive
-- `modelComplexity`: `0` is fast, `1` is more accurate (needs a stronger laptop)
+## Conclusion
 
-### Add your own era
+WaveWrap transforms simple hand movements into an exciting journey through time and space. With three unique worlds, crystal challenges, combo scoring, and gesture-based interaction, every adventure offers a new opportunity to explore, compete, and win.
 
-1. Add an entry to `ERAS` in `config.js` (id, name, emoji, colors).
-2. Add a `buildXxx` and `animXxx` function in `worlds.js` and register them in the `builders` / `animators` maps.
-3. Add a door position in `game.js` (`DOORS` is generated from `ERAS`, so 3 to 4 eras fit nicely).
-
-Or replace a world with a photo: in `drawWorld`, draw an `Image` instead of the procedural layer.
-
-## Expo tips
-
-- Light the player from the front, avoid a bright window behind them.
-- Leave about 1.5 to 2 m between the player and the camera so both hands fit.
-- Use a big screen or projector, Chrome, fullscreen (`F`), and a laptop with a decent CPU/GPU.
-- Test at the venue beforehand: lighting changes tracking quality.
-- Round length is 30 s, so a queue moves quickly.
-
-## Troubleshooting
-
-| Problem | Fix |
-| --- | --- |
-| "MediaPipe failed to load" | Check the internet connection, refresh |
-| Camera doesn't start | Allow camera permission; use `localhost` or `https`; close other apps using the camera |
-| Circle is not detected | Use a pointing pose (index out, other fingers curled), draw a bigger, rounder circle, or loosen `circle.*` in config |
-| Laggy | Keep `modelComplexity: 0`, close other tabs, use Chrome |
-| Person cut-out looks rough | Better lighting and a plain background help |
-
-## Credits
-
-- [MediaPipe Hands](https://developers.google.com/mediapipe/solutions/vision/hand_landmarker) and Selfie Segmentation by Google.
-
-## License
-
-MIT, see [LICENSE](LICENSE).
+**One Gesture. Three Worlds. Endless Adventure.**
