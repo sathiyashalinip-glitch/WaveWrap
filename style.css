@@ -1,0 +1,231 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: #05030f;
+  color: #fff;
+  font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+  overflow: hidden;
+}
+
+#app {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  background: #05030f;
+}
+
+/* 16:9 stage that always fits the screen; everything inside scales with it */
+#stageWrap {
+  position: relative;
+  width: min(100vw, calc(100vh * 16 / 9));
+  aspect-ratio: 16 / 9;
+  container-type: inline-size;
+  background: #000;
+}
+
+#stage {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#cam {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ---------- leaderboard (only while idle) ---------- */
+#board {
+  position: absolute;
+  right: 2cqw;
+  top: 14cqw;
+  width: 20cqw;
+  padding: 1.2cqw 1.4cqw;
+  border-radius: 1.4cqw;
+  background: rgba(10, 6, 35, 0.62);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(160, 200, 255, 0.25);
+  display: none;
+}
+#app[data-state='idle'] #board {
+  display: block;
+}
+#board h2 {
+  margin: 0 0 0.8cqw;
+  font-size: 1.5cqw;
+}
+#boardList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 1.35cqw;
+}
+#boardList li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1cqw;
+  padding: 0.35cqw 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+#boardList li.empty {
+  opacity: 0.7;
+  border: 0;
+}
+#boardList .n {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#boardList .p {
+  font-weight: 800;
+  color: #ffe066;
+}
+
+/* ---------- tool buttons ---------- */
+#tools {
+  position: absolute;
+  right: 1.2cqw;
+  bottom: 1.2cqw;
+  display: flex;
+  gap: 0.6cqw;
+}
+#tools button {
+  width: 4cqw;
+  height: 4cqw;
+  min-width: 36px;
+  min-height: 36px;
+  border-radius: 50%;
+  border: 0;
+  font-size: 1.8cqw;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  cursor: pointer;
+}
+#tools button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ---------- overlays ---------- */
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(5, 3, 20, 0.72);
+  backdrop-filter: blur(4px);
+}
+.overlay.hidden {
+  display: none;
+}
+.card {
+  width: 46cqw;
+  padding: 3cqw;
+  text-align: center;
+  border-radius: 2cqw;
+  background: linear-gradient(160deg, rgba(60, 30, 130, 0.85), rgba(10, 8, 50, 0.9));
+  border: 1px solid rgba(160, 200, 255, 0.35);
+  box-shadow: 0 0 5cqw rgba(110, 90, 255, 0.45);
+}
+.card h1 {
+  margin: 0 0 1cqw;
+  font-size: 3.6cqw;
+}
+.card h2 {
+  margin: 0;
+  font-size: 2.6cqw;
+}
+.lead {
+  font-size: 1.7cqw;
+  margin: 0 0 1.5cqw;
+  color: #cfd6ff;
+}
+.how {
+  text-align: left;
+  font-size: 1.6cqw;
+  line-height: 1.7;
+  margin: 0 auto 2cqw;
+  width: fit-content;
+  max-width: 100%;
+}
+.msg {
+  min-height: 1.4em;
+  font-size: 1.3cqw;
+  color: #ffd9a0;
+  margin: 1cqw 0 0;
+}
+.score {
+  font-size: 9cqw;
+  font-weight: 900;
+  color: #ffe066;
+  text-shadow: 0 0 2cqw rgba(255, 200, 0, 0.6);
+  line-height: 1.1;
+}
+.row {
+  display: flex;
+  gap: 1cqw;
+  justify-content: center;
+  margin-top: 1.4cqw;
+}
+button {
+  font: inherit;
+  font-size: 1.5cqw;
+  padding: 0.8cqw 1.6cqw;
+  border-radius: 1cqw;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  cursor: pointer;
+}
+button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.24);
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+button.big {
+  background: linear-gradient(135deg, #7a5cff, #28c8ff);
+  border: 0;
+  font-weight: 800;
+  font-size: 1.9cqw;
+  padding: 1cqw 2.6cqw;
+}
+#nameInput {
+  width: 70%;
+  margin-top: 1.2cqw;
+  padding: 0.9cqw 1.2cqw;
+  font-size: 1.9cqw;
+  text-align: center;
+  border-radius: 1cqw;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+}
+
+/* ---------- toast ---------- */
+#toast {
+  position: absolute;
+  left: 50%;
+  bottom: 4cqw;
+  transform: translateX(-50%) translateY(2cqw);
+  padding: 0.8cqw 2cqw;
+  border-radius: 99px;
+  background: rgba(0, 0, 0, 0.75);
+  font-size: 1.6cqw;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+}
+#toast.show {
+  opacity: 1;
+  transform: translateX(-50%);
+}

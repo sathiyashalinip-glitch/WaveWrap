@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WaveWrap</title>
+    <meta name="description" content="Draw a circle in the air to open a time portal, then catch crystals with your bare hands. Webcam hand-tracking game." />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- MediaPipe (hand tracking + person segmentation), pinned versions -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/hands.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1.1675465747/selfie_segmentation.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div id="app" data-state="idle">
+      <div id="stageWrap">
+        <canvas id="stage" width="1280" height="720"></canvas>
+        <video id="cam" playsinline muted></video>
+
+        <aside id="board">
+          <h2>🏆 Top Wave Wrappers</h2>
+          <ol id="boardList"></ol>
+        </aside>
+
+        <div id="tools">
+          <button id="photoBtn" title="Take photo (P)">📸</button>
+          <button id="fullBtn" title="Fullscreen (F)">⛶</button>
+        </div>
+
+        <div id="startScreen" class="overlay">
+          <div class="card">
+            <h1>🌀 WaveWrap</h1>
+            <p class="lead">Draw a circle. Wrap time. Catch the crystals!</p>
+            <ol class="how">
+              <li>☝️ Point with one finger and <b>draw a circle</b> in the air</li>
+              <li>🚪 Hold your fingertip on a <b>door</b> to pick an era</li>
+              <li>💎 Touch crystals for points &middot; avoid the <b>dark spiky orbs</b></li>
+            </ol>
+            <button id="startBtn" class="big">▶ Start</button>
+            <p id="startMsg" class="msg"></p>
+          </div>
+        </div>
+
+        <div id="resultScreen" class="overlay hidden">
+          <div class="card">
+            <h2 id="resultEra"></h2>
+            <div class="score" id="resultScore">0</div>
+            <p id="resultStats" class="msg"></p>
+            <input id="nameInput" maxlength="16" placeholder="Your name" autocomplete="off" />
+            <div class="row">
+              <button id="saveBtn" class="big">💾 Save score</button>
+              <button id="photoResultBtn">📸 Photo</button>
+              <button id="skipBtn">Skip</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="toast"></div>
+      </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
